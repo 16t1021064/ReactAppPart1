@@ -5,13 +5,21 @@ class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tempValue: ' '
+            tempValue: ' ',
+            userObj: {}
         };
     }
-
+    getUserInfo = (info) => {
+        this.setState({
+            userObj: info
+        });
+        this.props.getUserInfoForApp(info);
+    }
     showEditForm = () => {
         if (this.props.editUserStatus === true) {
-            return <EditUser changeEditUserStatus={() => this.props.changeEditUserStatus()} />;
+            return <EditUser getUserInfo={(info) => this.getUserInfo(info)}
+                userEditObject={this.props.userEditObject}
+                changeEditUserStatus={() => this.props.changeEditUserStatus()} />;
         }
     }
 
@@ -21,6 +29,7 @@ class Search extends Component {
         })
         this.props.checkConnectProps(this.state.tempValue);
     }
+
     hienThiNut = () => {
         if (this.props.hienThiForm === true) {
             return <div className="btn btn-block btn-secondary" onClick={() => this.props.ketNoi()} > Đóng lại </div>;
